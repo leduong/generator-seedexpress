@@ -1,0 +1,16 @@
+image: node:latest
+
+stages:
+  - production
+
+production:
+  type: deploy
+  stage: production
+
+  script:
+    - npm i
+    - npm run test
+  after_script:
+    - cat ./coverage/lcov.info | coveralls
+  only:
+    - master

@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Le Duong",
+      "authorEmail": "me@leduong.com",
+      "authorUrl": "https://github.com/leduong"
+    }
+  }
+}

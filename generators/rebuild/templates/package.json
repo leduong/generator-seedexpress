@@ -1,0 +1,26 @@
+{
+  "name": "<%= _s.slugify(baseName) %>",
+  "version": "0.0.0",
+  "description": "Description for <%= baseName %>",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "md5": "latest",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "latest",
+    "cors": "~2.7.1",
+    "express": "latest",
+    "lodash": "^4.17.11",
+    "method-override": "^3.0.0",
+    "morgan": "~1.0.0",
+    "mysql": "latest",
+    "sequelize": "^4.39.0",
+    "sequelize-mysql": "latest",
+    "sqlite3": "latest",
+    "supertest": "latest",
+    "swagger-jsdoc": "^3.2.3"
+  },
+  "devDependencies": {
+  }
+}
