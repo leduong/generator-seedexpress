@@ -8,16 +8,10 @@
     "email": "me@leduong.com",
     "url": "https://github.com/leduong"
   },
-  "files": [
-    "generators"
-  ],
+  "files": ["generators"],
   "main": "generators/index.js",
   "keywords": [
-    "generator swagger",
-    "generator expressjs",
-    "swagger express",
-    "sql",
-    "yeoman-generator"
+    "generator swagger", "generator expressjs", "swagger express", "sql", "yeoman-generator"
   ],
   "devDependencies": {
     "yeoman-test": "^1.7.0",
@@ -50,13 +44,9 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix", "git add"
     ],
-    "*.json": [
-      "git add",
-      "prettier --write"
-    ]
+    "*.json": ["git add", "prettier --write"]
   },
   "eslintConfig": {
     "env": {
@@ -64,25 +54,17 @@
       "node": true
     },
     "extends": [
-      "prettier",
-      "xo"
+      "prettier", "xo"
     ],
-    "plugins": [
-      "prettier"
-    ],
+    "plugins": ["prettier"],
     "rules": {
       "indent": [
-        "error",
-        2
+        "error", 2
       ],
       "semi": [
-        "error",
-        "always"
+        "error", "always"
       ],
-      "quotes": [
-        "error",
-        "single"
-      ]
+      "quotes": ["error", "single"]
     }
   },
   "scripts": {

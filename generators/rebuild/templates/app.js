@@ -10,7 +10,7 @@ const express = require('express'),
   cors = require('cors'),
   db = require('./models');
 <% _.each(entities, function (entity) { %>
-const <%= _.camelCase(entity.name) %> = require('./routes/<%= _s.camelize(_.capitalize(entity.name)) %>');
+const <%= _.camelCase(entity.name) %> = require('./routes/<%= _s.classify(_.capitalize(entity.name)) %>');
 <% }); %>
 
 /**
@@ -27,14 +27,11 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(cors());
 app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 const options = {
   definition: {
@@ -46,7 +43,9 @@ const options = {
   },
   // Path to the API docs
   // apis: ['./routes.js'],
-  apis: ['./routes/*.js', 'routes.js'], // pass all in array
+  apis: [
+    './routes/*.js', 'routes.js'
+  ], // pass all in array
 };
 const swaggerSpec = swaggerJSDoc(options);
 
@@ -55,13 +54,12 @@ app.get('/api-docs.json', (req, res) => {
   res.send(swaggerSpec);
 });
 
-
 <% _.each(entities, function (entity) { %>
-app.get('/<%= baseName %>/<%= _.camelCase(pluralize(entity.name)) %>', <%= _.camelCase(entity.name) %>.findAll);
-app.get('/<%= baseName %>/<%= _.camelCase(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.find);
-app.post('/<%= baseName %>/<%= _.camelCase(entity.name) %>', <%= _.camelCase(entity.name) %>.create);
-app.put('/<%= baseName %>/<%= _.camelCase(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.update);
-app.delete('/<%= baseName %>/<%= _.camelCase(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.destroy);
+app.get('/<%= baseName %>/<%= _s.classify(pluralize(entity.name)) %>', <%= _.camelCase(entity.name) %>.findAll);
+app.get('/<%= baseName %>/<%= _s.classify(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.find);
+app.post('/<%= baseName %>/<%= _s.classify(entity.name) %>', <%= _.camelCase(entity.name) %>.create);
+app.put('/<%= baseName %>/<%= _s.classify(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.update);
+app.delete('/<%= baseName %>/<%= _s.classify(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.destroy);
 <% }); %>
 
 /**
@@ -79,7 +77,6 @@ db.sequelize.sync().then(function() {
   server.on('error', onError);
   server.on('listening', onListening);
 });
-
 
 /**
  * Normalize a port into a number, string, or false.
@@ -110,9 +107,9 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string' ?
-    'Pipe ' + port :
-    'Port ' + port;
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -135,9 +132,9 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string' ?
-    'pipe ' + addr :
-    'port ' + addr.port;
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
 
@@ -170,9 +167,9 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string' ?
-    'Pipe ' + port :
-    'Port ' + port;
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -195,8 +192,8 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string' ?
-    'pipe ' + addr :
-    'port ' + addr.port;
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }

@@ -1,19 +1,20 @@
 module.exports = function(sequelize, DataTypes) {
   var <%= _s.camelize(_.capitalize(name)) %> = sequelize.define('<%= _s.camelize(_.capitalize(name)) %>', {
     <% _.each(attrs, function (attr) { %>
-    <%= _.camelCase(attr.attrName) %>: {
-      type: DataTypes.
-      <%= (attr.attrType === "Email") ? "STRING" : attr.attrType.toUpperCase() %>
+    <%= _s.underscored(attr.attrName) %>: {
+      type: DataTypes.<%= (attr.attrType === "Email") ? "STRING" : attr.attrType.toUpperCase() %>
       <% if (attr.attrType == 'Enum') { %>(<% var delim = ''; _.each(attr.enumValues, function (value) { %>
-        <%= delim %>
-        '<%= value %>'
-        <% delim = ', '; }) %>)
-      <% }; %>,
+      <%= delim %>
+      '<%= value %>' <% delim = ', '; }) %>)<% }; %>,
       validate: {
         <% if (attr.maxLength) { if (attr.minLength) { %>
-        len: [<%= attr.minLength %>, <%= attr.maxLength %>],
+        len: [
+          <%= attr.minLength %>, <%= attr.maxLength %>
+        ],
         <% } else { %>
-        len: [0, <%= attr.maxLength %>],
+        len: [
+          0, <%= attr.maxLength %>
+        ],
         <% } };
         if (attr.min) { %>
         min: <%= attr.min %>,
@@ -25,7 +26,9 @@ module.exports = function(sequelize, DataTypes) {
       <% if (attr.attrType == 'DateOnly') { %>
       get: function() {
         var value = this.getDataValue('<%= attr.attrName %>')
-        return value ? value.toISOString().substring(0, 10) : value
+        return value
+          ? value.toISOString().substring(0, 10)
+          : value
       }
       <% }; %>
     },
@@ -37,11 +40,11 @@ module.exports = function(sequelize, DataTypes) {
     // don't delete database entries but set the newly added attribute deletedAt
     // to the current date (when deletion was done). paranoid will only work if
     // timestamps are enabled
-    paranoid: true,
+    paranoid: false,
 
     // don't use camelcase for automatically added attributes but underscore style
     // so updatedAt will be updated_at
-    underscored: false,
+    underscored: true,
 
     // disable the modification of tablenames; By default, sequelize will automatically
     // transform all passed model names (first parameter of define) into plural.

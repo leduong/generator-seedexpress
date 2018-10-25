@@ -1,10 +1,9 @@
 var db = require('../models'),
   _ = require('lodash');
 
-
 /**
  * @swagger
- * /<%= baseName %>/<%= _.camelCase(pluralize(name)) %>:
+ * /<%= baseName %>/<%= _s.classify(pluralize(name)) %>:
  *   get:
  *     description: Get list of <%= _s.camelize(_.capitalize(name)) %>
  *     produces:
@@ -22,7 +21,9 @@ exports.findAll = function(req, res) {
     limit = parseInt(req.query.limit) || 20,
     group = req.query.group || "",
     offset = ((page - 1) * limit),
-    orderBy = [sort, order.toUpperCase()],
+    orderBy = [
+      sort, order.toUpperCase()
+    ],
     query = {
       order: [orderBy],
       offset: offset,
@@ -39,30 +40,28 @@ exports.findAll = function(req, res) {
     query = _.extend({
       <% var concat = []; _.each(attrs, function (attr) {
       if (attr.attrType === "String" || attr.attrType === "Char" || attr.attrType === "Text") {
-        concat.push(_.camelCase(attr.attrName));
+        concat.push(_s.underscored(attr.attrName));
       }
     });%>
       where: ["CONCAT(<%= concat.join(', ') %>) LIKE '%" + q + "%'"]
     }, query);
   };
 
-  db.
-  <%= _s.camelize(_.capitalize(name)) %>.findAndCountAll(query)
-    .then(function(result) {
-      res.jsonp({
-        total: result.count,
-        page: page,
-        limit: limit,
-        from: offset + 1,
-        to: offset + result.rows.length,
-        results: result.rows
-      });
-    })
+  db.<%= _s.camelize(_.capitalize(name)) %>.findAndCountAll(query).then(function(result) {
+    res.jsonp({
+      total: result.count,
+      page: page,
+      limit: limit,
+      from: offset + 1,
+      to: offset + result.rows.length,
+      results: result.rows
+    });
+  })
 }
 
 /**
  * @swagger
- * /<%= baseName %>/<%= _.camelCase(name) %>/{id}:
+ * /<%= baseName %>/<%= _s.classify(name) %>/{id}:
  *   get:
  *     description: Find a <%= _s.camelize(_.capitalize(name)) %> by ID
  *     produces:
@@ -82,8 +81,7 @@ exports.findAll = function(req, res) {
  *         description: ID of <%= _s.camelize(_.capitalize(name)) %>
  */
 exports.find = function(req, res) {
-  db.
-  <%= _s.camelize(_.capitalize(name)) %>.find({
+  db.<%= _s.camelize(_.capitalize(name)) %>.find({
     where: {
       id: req.params.id
     }
@@ -98,7 +96,7 @@ exports.find = function(req, res) {
 
 /**
  * @swagger
- * /<%= baseName %>/<%= _.camelCase(name) %>:
+ * /<%= baseName %>/<%= _s.classify(name) %>:
  *   post:
  *     description: Add a new <%= _s.camelize(_.capitalize(name)) %>
  *     consumes:
@@ -123,8 +121,7 @@ exports.find = function(req, res) {
  *         $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
  */
 exports.create = function(req, res) {
-  db.
-  <%= _s.camelize(_.capitalize(name)) %>.create(req.body).then(function(entity) {
+  db.<%= _s.camelize(_.capitalize(name)) %>.create(req.body).then(function(entity) {
     res.statusCode = 201
     res.json(entity)
   })
@@ -132,7 +129,7 @@ exports.create = function(req, res) {
 
 /**
  * @swagger
- * /<%= baseName %>/<%= _.camelCase(name) %>/{id}:
+ * /<%= baseName %>/<%= _s.classify(name) %>/{id}:
  *   put:
  *     description: Update a <%= _s.camelize(_.capitalize(name)) %> by ID
  *     produces:
@@ -163,8 +160,7 @@ exports.create = function(req, res) {
  *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
  */
 exports.update = function(req, res) {
-  db.
-  <%= _s.camelize(_.capitalize(name)) %>.find({
+  db.<%= _s.camelize(_.capitalize(name)) %>.find({
     where: {
       id: req.params.id
     }
@@ -179,10 +175,9 @@ exports.update = function(req, res) {
   })
 }
 
-
 /**
  * @swagger
- * /<%= baseName %>/<%= _.camelCase(name) %>/{id}:
+ * /<%= baseName %>/<%= _s.classify(name) %>/{id}:
  *   delete:
  *     description: Delete a <%= _s.camelize(_.capitalize(name)) %> by ID
  *     produces:
@@ -203,8 +198,7 @@ exports.update = function(req, res) {
  *         description: ID of <%= _s.camelize(_.capitalize(name)) %>
  */
 exports.destroy = function(req, res) {
-  db.
-  <%= _s.camelize(_.capitalize(name)) %>.find({
+  db.<%= _s.camelize(_.capitalize(name)) %>.find({
     where: {
       id: req.params.id
     }
@@ -225,6 +219,6 @@ exports.destroy = function(req, res) {
  *   <%= _s.camelize(_.capitalize(name)) %>:
  *     type: object
  *     properties:
- <% _.each(attrs, function (attr) { %>*       <%= _.camelCase(attr.attrName) %>:
- *         type: <%= attr.attrType.toLowerCase() %>
+ <% _.each(attrs, function (attr) { %>*       <%= _s.underscored(attr.attrName) %>:
+ *         type: <% if (attr.attrType == 'BIGINT' || attr.attrType == 'TINYINT') {%>integer<%} else { if (attr.attrType == 'TEXT') {%>string<%} else {%><%= attr.attrType.toLowerCase() %><%}}%>
  <% }); %>*/
