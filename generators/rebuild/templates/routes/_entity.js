@@ -1,10 +1,9 @@
 var db = require('../models'),
   _ = require('lodash');
 
-
 /**
  * @swagger
- * /<%= baseName %>/<%= _.camelCase(pluralize(name)) %>:
+ * /<%= baseName %>/<%= _s.classify(pluralize(name)) %>:
  *   get:
  *     description: Get list of <%= _s.camelize(_.capitalize(name)) %>
  *     produces:
@@ -22,7 +21,9 @@ exports.findAll = function(req, res) {
     limit = parseInt(req.query.limit) || 20,
     group = req.query.group || "",
     offset = ((page - 1) * limit),
-    orderBy = [sort, order.toUpperCase()],
+    orderBy = [
+      sort, order.toUpperCase()
+    ],
     query = {
       order: [orderBy],
       offset: offset,
@@ -38,31 +39,29 @@ exports.findAll = function(req, res) {
   if (q) {
     query = _.extend({
       <% var concat = []; _.each(attrs, function (attr) {
-      if (attr.attrType === "String" || attr.attrType === "Char" || attr.attrType === "Text") {
-        concat.push(_.camelCase(attr.attrName));
+      if (attr.attrType.toUpperCase() === "STRING" || attr.attrType.toUpperCase() === "CHAR" || attr.attrType.toUpperCase() === "TEXT") {
+        concat.push(_s.underscored(attr.attrName));
       }
     });%>
       where: ["CONCAT(<%= concat.join(', ') %>) LIKE '%" + q + "%'"]
     }, query);
   };
 
-  db.
-  <%= _s.camelize(_.capitalize(name)) %>.findAndCountAll(query)
-    .then(function(result) {
-      res.jsonp({
-        total: result.count,
-        page: page,
-        limit: limit,
-        from: offset + 1,
-        to: offset + result.rows.length,
-        results: result.rows
-      });
-    })
+  db.<%= _s.camelize(_.capitalize(name)) %>.findAndCountAll(query).then(function(result) {
+    res.jsonp({
+      total: result.count,
+      page: page,
+      limit: limit,
+      from: offset + 1,
+      to: offset + result.rows.length,
+      results: result.rows
+    });
+  })
 }
 
 /**
  * @swagger
- * /<%= baseName %>/<%= _.camelCase(name) %>/{id}:
+ * /<%= baseName %>/<%= _s.classify(name) %>/{id}:
  *   get:
  *     description: Find a <%= _s.camelize(_.capitalize(name)) %> by ID
  *     produces:
@@ -82,8 +81,7 @@ exports.findAll = function(req, res) {
  *         description: ID of <%= _s.camelize(_.capitalize(name)) %>
  */
 exports.find = function(req, res) {
-  db.
-  <%= _s.camelize(_.capitalize(name)) %>.find({
+  db.<%= _s.camelize(_.capitalize(name)) %>.find({
     where: {
       id: req.params.id
     }
@@ -98,7 +96,7 @@ exports.find = function(req, res) {
 
 /**
  * @swagger
- * /<%= baseName %>/<%= _.camelCase(name) %>:
+ * /<%= baseName %>/<%= _s.classify(name) %>:
  *   post:
  *     description: Add a new <%= _s.camelize(_.capitalize(name)) %>
  *     consumes:
@@ -116,15 +114,15 @@ exports.find = function(req, res) {
  *           type: object
  *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
  *     parameters:
- *       - name: body
+ *       - name: <%= _s.camelize(_.capitalize(name)) %>
  *         description: object of <%= _s.camelize(_.capitalize(name)) %>
  *         in: body
  *         required: true
- *         $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
+ *         schema:
+ *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
  */
 exports.create = function(req, res) {
-  db.
-  <%= _s.camelize(_.capitalize(name)) %>.create(req.body).then(function(entity) {
+  db.<%= _s.camelize(_.capitalize(name)) %>.create(req.body).then(function(entity) {
     res.statusCode = 201
     res.json(entity)
   })
@@ -132,7 +130,7 @@ exports.create = function(req, res) {
 
 /**
  * @swagger
- * /<%= baseName %>/<%= _.camelCase(name) %>/{id}:
+ * /<%= baseName %>/<%= _s.classify(name) %>/{id}:
  *   put:
  *     description: Update a <%= _s.camelize(_.capitalize(name)) %> by ID
  *     produces:
@@ -149,22 +147,22 @@ exports.create = function(req, res) {
  *           description: <%= _s.camelize(_.capitalize(name)) %>
  *           type: object
  *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
- *       parameters:
- *         - name: id
- *           type: integer
- *           format: int64
- *           in: path
- *           required: true
- *           description: ID of <%= _s.camelize(_.capitalize(name)) %>
- *         - name: body
- *           description: object of <%= _s.camelize(_.capitalize(name)) %>
- *           in: body
- *           required: true
+ *     parameters:
+ *       - name: id
+ *         type: integer
+ *         format: int64
+ *         in: path
+ *         required: true
+ *         description: ID of <%= _s.camelize(_.capitalize(name)) %>
+ *       - name: <%= _s.camelize(_.capitalize(name)) %>
+ *         description: object of <%= _s.camelize(_.capitalize(name)) %>
+ *         in: body
+ *         required: true
+ *         schema:
  *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
  */
 exports.update = function(req, res) {
-  db.
-  <%= _s.camelize(_.capitalize(name)) %>.find({
+  db.<%= _s.camelize(_.capitalize(name)) %>.find({
     where: {
       id: req.params.id
     }
@@ -179,10 +177,9 @@ exports.update = function(req, res) {
   })
 }
 
-
 /**
  * @swagger
- * /<%= baseName %>/<%= _.camelCase(name) %>/{id}:
+ * /<%= baseName %>/<%= _s.classify(name) %>/{id}:
  *   delete:
  *     description: Delete a <%= _s.camelize(_.capitalize(name)) %> by ID
  *     produces:
@@ -203,8 +200,7 @@ exports.update = function(req, res) {
  *         description: ID of <%= _s.camelize(_.capitalize(name)) %>
  */
 exports.destroy = function(req, res) {
-  db.
-  <%= _s.camelize(_.capitalize(name)) %>.find({
+  db.<%= _s.camelize(_.capitalize(name)) %>.find({
     where: {
       id: req.params.id
     }
@@ -225,6 +221,6 @@ exports.destroy = function(req, res) {
  *   <%= _s.camelize(_.capitalize(name)) %>:
  *     type: object
  *     properties:
- <% _.each(attrs, function (attr) { %>*       <%= _.camelCase(attr.attrName) %>:
- *         type: <%= attr.attrType.toLowerCase() %>
+ <% _.each(attrs, function (attr) { %>*       <%= _s.underscored(attr.attrName) %>:
+ *         type: <% if (attr.attrType.toUpperCase() == 'BIGINT' || attr.attrType.toUpperCase() == 'TINYINT') {%>integer<%} else { if (attr.attrType.toUpperCase() == 'TEXT') {%>string<%} else {%><%= attr.attrType.toLowerCase() %><%}}%>
  <% }); %>*/

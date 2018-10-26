@@ -21,7 +21,7 @@ module.exports = class extends Generator {
     //   default: true
     // }];
     // return this.prompt(prompts).then(props => {
-    //   // To access props later use this.props.someAnswer;
+    //    To access props later use this.props.someAnswer;
     //   this.props = props;
     // });
   }
@@ -31,14 +31,13 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    this.generatorConfig = JSON.parse(
-      fs.readFileSync('generator.json', 'utf8')
-    );
+    this.generatorConfig = JSON.parse(fs.readFileSync('generator.json', 'utf8'));
     // This.generatorConfig = this.dest.readJSON('generator.json');
     this.baseURL = this.generatorConfig.baseURL;
     this.baseName = this.generatorConfig.baseName;
     this.databaseType = this.generatorConfig.databaseType;
     this.hostName = this.generatorConfig.hostName;
+    this.port = this.generatorConfig.port;
     this.databaseName = this.generatorConfig.databaseName;
     this.userName = this.generatorConfig.userName;
     this.password = this.generatorConfig.password;
@@ -61,49 +60,25 @@ module.exports = class extends Generator {
       'Procfile'
     ];
 
-    _.each(
-      files,
-      function (file) {
-        this.fs.copyTpl(this.templatePath(file), this.destinationPath(file), {
-          ...this
-        });
-      }.bind(this)
-    );
+    _.each(files, function (file) {
+      this.fs.copyTpl(this.templatePath(file), this.destinationPath(file), {
+        ...this
+      });
+    }.bind(this));
 
-    _.each(
-      this.entities,
-      function (entity) {
-        this.name = entity.name;
-        this.attrs = entity.attrs;
+    _.each(this.entities, function (entity) {
+      this.name = entity.name;
+      this.attrs = entity.attrs;
 
-        this.fs.copyTpl(
-          this.templatePath('models/_entity.js'),
-          this.destinationPath(
-            'models/' + _s.camelize(_.capitalize(entity.name)) + '.js'
-          ),
-          {
-            ...this
-          }
-        );
-        this.fs.copyTpl(
-          this.templatePath('routes/_entity.js'),
-          this.destinationPath(
-            'routes/' + _s.camelize(_.capitalize(entity.name)) + '.js'
-          ),
-          {
-            ...this
-          }
-        );
-        this.fs.copyTpl(
-          this.templatePath('routes/_test.js'),
-          this.destinationPath(
-            'routes/' + _s.camelize(_.capitalize(entity.name)) + '.spec.js'
-          ),
-          {
-            ...this
-          }
-        );
-      }.bind(this)
-    );
+      this.fs.copyTpl(this.templatePath('models/_entity.js'), this.destinationPath('models/' + _s.camelize(_.capitalize(entity.name)) + '.js'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('routes/_entity.js'), this.destinationPath('routes/' + _s.camelize(_.capitalize(entity.name)) + '.js'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('routes/_test.js'), this.destinationPath('routes/' + _s.camelize(_.capitalize(entity.name)) + '.spec.js'), {
+        ...this
+      });
+    }.bind(this));
   }
 };
