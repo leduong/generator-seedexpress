@@ -114,11 +114,12 @@ exports.find = function(req, res) {
  *           type: object
  *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
  *     parameters:
- *       - name: body
+ *       - name: <%= _s.camelize(_.capitalize(name)) %>
  *         description: object of <%= _s.camelize(_.capitalize(name)) %>
  *         in: body
  *         required: true
- *         $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
+ *         schema:
+ *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
  */
 exports.create = function(req, res) {
   db.<%= _s.camelize(_.capitalize(name)) %>.create(req.body).then(function(entity) {
@@ -146,17 +147,18 @@ exports.create = function(req, res) {
  *           description: <%= _s.camelize(_.capitalize(name)) %>
  *           type: object
  *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
- *       parameters:
- *         - name: id
- *           type: integer
- *           format: int64
- *           in: path
- *           required: true
- *           description: ID of <%= _s.camelize(_.capitalize(name)) %>
- *         - name: body
- *           description: object of <%= _s.camelize(_.capitalize(name)) %>
- *           in: body
- *           required: true
+ *     parameters:
+ *       - name: id
+ *         type: integer
+ *         format: int64
+ *         in: path
+ *         required: true
+ *         description: ID of <%= _s.camelize(_.capitalize(name)) %>
+ *       - name: <%= _s.camelize(_.capitalize(name)) %>
+ *         description: object of <%= _s.camelize(_.capitalize(name)) %>
+ *         in: body
+ *         required: true
+ *         schema:
  *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
  */
 exports.update = function(req, res) {

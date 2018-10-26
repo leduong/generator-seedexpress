@@ -1,8 +1,5 @@
-var request = require('supertest');
-
-var express = require('express');
-
 process.env.NODE_ENV = 'test';
+var request = require('supertest');
 
 var app = require('../app.js');
 var _id = '';
