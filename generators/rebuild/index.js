@@ -60,7 +60,7 @@ module.exports = class extends Generator {
     ];
 
     _.each(files, function (file) {
-      this.fs.copyTpl(this.templatePath(file), this.destinationPath(file), {
+      this.fs.copyTpl(this.templatePath(file), this.destinationPath('Server/' + file), {
         ...this
       });
     }.bind(this));
@@ -76,13 +76,13 @@ module.exports = class extends Generator {
       this.name = entity.name;
       this.attrs = entity.attrs;
 
-      this.fs.copyTpl(this.templatePath('models/_entity.js'), this.destinationPath('models/' + _s.camelize(_.capitalize(entity.name)) + '.js'), {
+      this.fs.copyTpl(this.templatePath('models/_entity.js'), this.destinationPath('Server/models/' + _s.camelize(_.capitalize(entity.name)) + '.js'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('routes/_entity.js'), this.destinationPath('routes/' + _s.camelize(_.capitalize(entity.name)) + '.js'), {
+      this.fs.copyTpl(this.templatePath('routes/_entity.js'), this.destinationPath('Server/routes/' + _s.camelize(_.capitalize(entity.name)) + '.js'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('routes/_test.js'), this.destinationPath('routes/' + _s.camelize(_.capitalize(entity.name)) + '.spec.js'), {
+      this.fs.copyTpl(this.templatePath('routes/_test.js'), this.destinationPath('Server/routes/' + _s.camelize(_.capitalize(entity.name)) + '.spec.js'), {
         ...this
       });
       this.fs.copyTpl(this.templatePath('angular-editcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/edit-' + entity.name.toLowerCase() + '-component.ts'), {
