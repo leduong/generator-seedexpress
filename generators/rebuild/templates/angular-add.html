@@ -1,0 +1,20 @@
+<nb-card>
+    <nb-card-header>
+        <button class="btn btn-success"><i class="fas fa-plus"></i> ルーム作成</button>
+        <button class="btn btn-danger"><i class="fas fa-trash"></i> 削除</button>
+    </nb-card-header>
+    <nb-card-body>
+      <h2 class="text-center">Add <%= _s.classify(name) %></h2>
+      <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+        <% _.each(attrs, function (attr) { %><div class="form-group">
+          <label for="<%=  _s.underscored(attr.attrName) %>"><%= _.capitalize(attr.attrName) %>:</label>
+          <input type="text" class="form-control"
+                 formControlName="<%=  _s.underscored(attr.attrName) %>"
+                 placeholder="<%= _s.classify(_.capitalize(attr.attrName)) %>"
+                 name="<%=  _s.underscored(attr.attrName) %>"
+                 id="<%=  _s.underscored(attr.attrName) %>">
+        </div><%})%>
+        <button class="btn btn-success">Submit</button>
+      </form>
+    </nb-card-body>
+</nb-card>

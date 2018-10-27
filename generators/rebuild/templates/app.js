@@ -9,8 +9,8 @@ const express = require('express'),
   path = require('path'),
   cors = require('cors'),
   db = require('./models');
-<% _.each(entities, function (entity) { %>
-const <%= _.camelCase(entity.name) %> = require('./routes/<%= _s.classify(_.capitalize(entity.name)) %>');
+<% _.each(entities, function(entity) { %>
+const <%= _.camelCase(entity.name) %> = require('./routes/<%= _s.classify(entity.name) %>');
 <% }); %>
 
 /**
@@ -54,8 +54,8 @@ app.get('/api-docs.json', (req, res) => {
   res.send(swaggerSpec);
 });
 
-<% _.each(entities, function (entity) { %>
-app.get('/<%= baseName %>/<%= _s.classify(pluralize(entity.name)) %>', <%= _.camelCase(entity.name) %>.findAll);
+<% _.each(entities, function(entity) { %>
+app.get('/<%= baseName %>/<%= _s.classify(entity.name) %>', <%= _.camelCase(entity.name) %>.findAll);
 app.get('/<%= baseName %>/<%= _s.classify(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.find);
 app.post('/<%= baseName %>/<%= _s.classify(entity.name) %>', <%= _.camelCase(entity.name) %>.create);
 app.put('/<%= baseName %>/<%= _s.classify(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.update);

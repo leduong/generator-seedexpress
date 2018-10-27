@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var <%= _s.camelize(_.capitalize(name)) %> = sequelize.define('<%= _s.camelize(_.capitalize(name)) %>', {
+  var <%= _s.classify(name) %> = sequelize.define('<%= _s.classify(name) %>', {
     <% _.each(attrs, function (attr) { %>
     <%= _s.underscored(attr.attrName) %>: {
       type: DataTypes.<%= (attr.attrType.toUpperCase() === "EMAIL") ? "STRING" : attr.attrType.toUpperCase() %>
@@ -52,8 +52,8 @@ module.exports = function(sequelize, DataTypes) {
     // freezeTableName: true,
 
     // define the table's name
-    tableName: '<%= _s.camelize(_.capitalize(name)) %>'
+    tableName: '<%= _s.classify(name) %>'
   })
 
-  return <%= _s.camelize(_.capitalize(name)) %>
+  return <%= _s.classify(name) %>
 }

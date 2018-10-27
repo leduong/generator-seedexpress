@@ -50,9 +50,8 @@ module.exports = class extends Generator {
     this._ = _;
 
     var files = [
-      '.editorconfig',
-      '.gitignore',
-      '.jshintrc',
+      '_editorconfig',
+      '_gitignore',
       'app.js',
       'models/index.js',
       'config/config.json',
@@ -62,6 +61,13 @@ module.exports = class extends Generator {
 
     _.each(files, function (file) {
       this.fs.copyTpl(this.templatePath(file), this.destinationPath(file), {
+        ...this
+      });
+    }.bind(this));
+
+    var pages = ['pages-menu.js', 'pages.module.js', 'pages-routing.module.js'];
+    _.each(pages, function (file) {
+      this.fs.copyTpl(this.templatePath(file), this.destinationPath('Client/Admin/src/app/pages/' + file), {
         ...this
       });
     }.bind(this));
@@ -77,6 +83,48 @@ module.exports = class extends Generator {
         ...this
       });
       this.fs.copyTpl(this.templatePath('routes/_test.js'), this.destinationPath('routes/' + _s.camelize(_.capitalize(entity.name)) + '.spec.js'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-editcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/edit-' + entity.name.toLowerCase() + '-component.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-addcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/add-' + entity.name.toLowerCase() + '-component.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-listcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/list-' + entity.name.toLowerCase() + '-component.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-list-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/list-' + entity.name.toLowerCase() + '.spec.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-add-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/add-' + entity.name.toLowerCase() + '.spec.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-edit-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/edit-' + entity.name.toLowerCase() + '.spec.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-edit.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/edit-' + entity.name.toLowerCase() + '-component.html'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-list.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/list-' + entity.name.toLowerCase() + '-component.html'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-add.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/add-' + entity.name.toLowerCase() + '-component.html'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-model.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '-model.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-service.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '-service.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-router.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '-router.module.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-module.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '.module.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular-cmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '.component.ts'), {
         ...this
       });
     }.bind(this));
