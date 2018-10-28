@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Add<%= _s.classify(name) %>Component } from './add-<%= name.toLowerCase() %>.component';
+import { Add<%= _s.classify(name) %>Component } from './add-<%= _.lowerCase(name) %>.component';
 
 describe('Add<%= _s.classify(name) %>Component', () => {
   let component: Add<%= _s.classify(name) %>Component;

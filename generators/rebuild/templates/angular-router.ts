@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { <%= _s.classify(name) %>Component } from './<%= name.toLowerCase() %>.component';
-import { List<%= _s.classify(name) %>Component } from './list-<%= name.toLowerCase() %>.component';
-import { Add<%= _s.classify(name) %>Component } from './add-<%= name.toLowerCase() %>.component';
-import { Edit<%= _s.classify(name) %>Component } from './edit-<%= name.toLowerCase() %>.component';
+import { <%= _s.classify(name) %>Component } from './<%= _.lowerCase(name) %>.component';
+import { List<%= _s.classify(name) %>Component } from './list-<%= _.lowerCase(name) %>.component';
+import { Add<%= _s.classify(name) %>Component } from './add-<%= _.lowerCase(name) %>.component';
+import { Edit<%= _s.classify(name) %>Component } from './edit-<%= _.lowerCase(name) %>.component';
 
 const routes: Routes = [
   {
@@ -12,15 +12,15 @@ const routes: Routes = [
     component: <%= _s.classify(name) %>Component,
     children: [
       {
-        path: 'new-<%= name.toLowerCase() %>',
+        path: 'new-<%= _.lowerCase(name) %>',
         component: Add<%= _s.classify(name) %>Component,
       },
       {
-        path: 'edit-<%= name.toLowerCase() %>/:id',
+        path: 'edit-<%= _.lowerCase(name) %>/:id',
         component: Edit<%= _s.classify(name) %>Component,
       },
       {
-        path: 'list-<%= name.toLowerCase() %>',
+        path: 'list-<%= _.lowerCase(name) %>',
         component: List<%= _s.classify(name) %>Component,
       },
     ],

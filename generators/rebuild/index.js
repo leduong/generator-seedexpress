@@ -85,49 +85,49 @@ module.exports = class extends Generator {
       this.fs.copyTpl(this.templatePath('routes/_test.js'), this.destinationPath('Server/routes/' + _s.camelize(_.capitalize(entity.name)) + '.spec.js'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-editcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/edit-' + entity.name.toLowerCase() + '-component.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-editcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/edit-' + _.lowerCase(entity.name) + '.component.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-addcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/add-' + entity.name.toLowerCase() + '-component.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-addcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/add-' + _.lowerCase(entity.name) + '.component.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-listcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/list-' + entity.name.toLowerCase() + '-component.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-listcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/list-' + _.lowerCase(entity.name) + '.component.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-list-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/list-' + entity.name.toLowerCase() + '.spec.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-list-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/list-' + _.lowerCase(entity.name) + '.spec.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-add-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/add-' + entity.name.toLowerCase() + '.spec.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-add-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/add-' + _.lowerCase(entity.name) + '.spec.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-edit-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/edit-' + entity.name.toLowerCase() + '.spec.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-edit-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/edit-' + _.lowerCase(entity.name) + '.spec.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-edit.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/edit-' + entity.name.toLowerCase() + '.html'), {
+      this.fs.copyTpl(this.templatePath('angular-edit.html'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/edit-' + _.lowerCase(entity.name) + '.html'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-list.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/list-' + entity.name.toLowerCase() + '.html'), {
+      this.fs.copyTpl(this.templatePath('angular-list.html'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/list-' + _.lowerCase(entity.name) + '.html'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-add.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/add-' + entity.name.toLowerCase() + '.html'), {
+      this.fs.copyTpl(this.templatePath('angular-add.html'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/add-' + _.lowerCase(entity.name) + '.html'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-model.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '-model.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-model.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '-model.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-service.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '-service.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-service.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '-service.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-router.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '-router.module.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-router.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '-router.module.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-module.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '.module.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-module.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '.module.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-cmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '.component.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-cmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '.component.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular.scss'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '.scss'), {
+      this.fs.copyTpl(this.templatePath('angular.scss'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '.scss'), {
         ...this
       });
     }.bind(this));

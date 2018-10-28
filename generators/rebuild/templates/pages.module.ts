@@ -8,7 +8,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 
 <% _.each(entities, function(entity) { %>
-import { <%= _s.classify(entity.name) %>Module } from './<%= entity.name.toLowerCase() %>/<%= entity.name.toLowerCase() %>.module'; <% }) %>
+import { <%= _s.classify(entity.name) %>Module } from './<%= _.lowerCase(entity.name) %>/<%= _.lowerCase(entity.name) %>.module'; <% }) %>
 
 const PAGES_COMPONENTS = [PagesComponent];
 
@@ -18,7 +18,8 @@ const PAGES_COMPONENTS = [PagesComponent];
     PagesRoutingModule,
     DashboardModule,
     MiscellaneousModule,
-    <% _.each(entities, function(entity) { %><%= _s.classify(entity.name) %>Module, <% }) %>
+    <% _.each(entities, function(entity) { %>
+    <%= _s.classify(entity.name) %>Module, <% }) %>
     ],
   declarations: [...PAGES_COMPONENTS],
 })

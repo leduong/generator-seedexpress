@@ -1,6 +1,6 @@
 <nb-card>
     <nb-card-header>
-        <a routerLink="../list-<%= name.toLowerCase() %>"><button class="btn btn-primary">
+        <a routerLink="../list-<%= _.lowerCase(name) %>"><button class="btn btn-primary">
           <i class="fas fa-list"></i> List <%= _s.classify(name) %>
         </button></a>
     </nb-card-header>
