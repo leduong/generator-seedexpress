@@ -65,7 +65,7 @@ module.exports = class extends Generator {
       });
     }.bind(this));
 
-    var pages = ['pages-menu.js', 'pages.module.js', 'pages-routing.module.js'];
+    var pages = ['pages-menu.ts', 'pages.module.ts', 'pages-routing.module.ts'];
     _.each(pages, function (file) {
       this.fs.copyTpl(this.templatePath(file), this.destinationPath('Client/Admin/src/app/pages/' + file), {
         ...this
@@ -85,49 +85,49 @@ module.exports = class extends Generator {
       this.fs.copyTpl(this.templatePath('routes/_test.js'), this.destinationPath('Server/routes/' + _s.camelize(_.capitalize(entity.name)) + '.spec.js'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-editcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/edit-' + _.lowerCase(entity.name) + '.component.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-editcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/edit-' + _.toLower(_s.classify(entity.name)) + '.component.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-addcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/add-' + _.lowerCase(entity.name) + '.component.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-addcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/add-' + _.toLower(_s.classify(entity.name)) + '.component.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-listcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/list-' + _.lowerCase(entity.name) + '.component.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-listcmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/list-' + _.toLower(_s.classify(entity.name)) + '.component.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-list-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/list-' + _.lowerCase(entity.name) + '.spec.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-list-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/list-' + _.toLower(_s.classify(entity.name)) + '.spec.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-add-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/add-' + _.lowerCase(entity.name) + '.spec.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-add-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/add-' + _.toLower(_s.classify(entity.name)) + '.spec.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-edit-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/edit-' + _.lowerCase(entity.name) + '.spec.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-edit-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/edit-' + _.toLower(_s.classify(entity.name)) + '.spec.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-edit.html'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/edit-' + _.lowerCase(entity.name) + '.html'), {
+      this.fs.copyTpl(this.templatePath('angular-edit.html'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/edit-' + _.toLower(_s.classify(entity.name)) + '.html'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-list.html'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/list-' + _.lowerCase(entity.name) + '.html'), {
+      this.fs.copyTpl(this.templatePath('angular-list.html'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/list-' + _.toLower(_s.classify(entity.name)) + '.html'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-add.html'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/add-' + _.lowerCase(entity.name) + '.html'), {
+      this.fs.copyTpl(this.templatePath('angular-add.html'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/add-' + _.toLower(_s.classify(entity.name)) + '.html'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-model.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '-model.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-model.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/' + _.toLower(_s.classify(entity.name)) + '.model.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-service.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '-service.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-service.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/' + _.toLower(_s.classify(entity.name)) + '.service.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-router.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '-router.module.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-router.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/' + _.toLower(_s.classify(entity.name)) + '-router.module.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-module.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '.module.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-module.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/' + _.toLower(_s.classify(entity.name)) + '.module.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-cmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '.component.ts'), {
+      this.fs.copyTpl(this.templatePath('angular-cmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/' + _.toLower(_s.classify(entity.name)) + '.component.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular.scss'), this.destinationPath('Client/Admin/src/app/pages/' + _.lowerCase(entity.name) + '/' + _.lowerCase(entity.name) + '.scss'), {
+      this.fs.copyTpl(this.templatePath('angular.scss'), this.destinationPath('Client/Admin/src/app/pages/' + _.toLower(_s.classify(entity.name)) + '/' + _.toLower(_s.classify(entity.name)) + '.scss'), {
         ...this
       });
     }.bind(this));

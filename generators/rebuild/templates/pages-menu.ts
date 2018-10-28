@@ -111,12 +111,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-compose',
     children: [
       {
-        title: 'New <%= _.lowerCase(entity.name) %>',
-        link: '/pages/<%= _.lowerCase(entity.name) %>/new-<%= _.lowerCase(entity.name) %>',
+        title: 'New <%= _.toLower(_s.classify(entity.name)) %>',
+        link: '/pages/<%= _.toLower(_s.classify(entity.name)) %>/add-<%= _.toLower(_s.classify(entity.name)) %>',
       },
       {
-        title: 'List <%= _.lowerCase(entity.name) %>',
-        link: '/pages/<%= _.lowerCase(entity.name) %>/list-<%= _.lowerCase(entity.name) %>',
+        title: 'List <%= _.toLower(_s.classify(entity.name)) %>',
+        link: '/pages/<%= _.toLower(_s.classify(entity.name)) %>/list-<%= _.toLower(_s.classify(entity.name)) %>',
       },
     ],
   }, <% }); %>
