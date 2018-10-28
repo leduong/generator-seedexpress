@@ -103,13 +103,13 @@ module.exports = class extends Generator {
       this.fs.copyTpl(this.templatePath('angular-edit-spec.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/edit-' + entity.name.toLowerCase() + '.spec.ts'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-edit.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/edit-' + entity.name.toLowerCase() + '-component.html'), {
+      this.fs.copyTpl(this.templatePath('angular-edit.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/edit-' + entity.name.toLowerCase() + '.html'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-list.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/list-' + entity.name.toLowerCase() + '-component.html'), {
+      this.fs.copyTpl(this.templatePath('angular-list.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/list-' + entity.name.toLowerCase() + '.html'), {
         ...this
       });
-      this.fs.copyTpl(this.templatePath('angular-add.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/add-' + entity.name.toLowerCase() + '-component.html'), {
+      this.fs.copyTpl(this.templatePath('angular-add.html'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/add-' + entity.name.toLowerCase() + '.html'), {
         ...this
       });
       this.fs.copyTpl(this.templatePath('angular-model.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '-model.ts'), {
@@ -125,6 +125,9 @@ module.exports = class extends Generator {
         ...this
       });
       this.fs.copyTpl(this.templatePath('angular-cmp.ts'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '.component.ts'), {
+        ...this
+      });
+      this.fs.copyTpl(this.templatePath('angular.scss'), this.destinationPath('Client/Admin/src/app/pages/' + entity.name.toLowerCase() + '/' + entity.name.toLowerCase() + '.scss'), {
         ...this
       });
     }.bind(this));

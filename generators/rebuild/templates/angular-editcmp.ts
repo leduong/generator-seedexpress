@@ -7,7 +7,8 @@ import { first } from "rxjs/operators";
 
 @Component({
   selector: 'qmr-edit-<%= name.toLowerCase() %>',
-  templateUrl: './edit-<%= name.toLowerCase() %>.component.html'
+  styleUrls: ['./<%= name.toLowerCase() %>.scss'],
+  templateUrl: './edit-<%= name.toLowerCase() %>.html'
 })
 export class Edit<%= _s.classify(name) %>Component implements OnInit {
 

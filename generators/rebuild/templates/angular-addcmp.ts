@@ -7,7 +7,8 @@ import {<%= _s.classify(name) %>Service} from "./<%= name.toLowerCase() %>.servi
 
 @Component({
   selector: 'qmr-add-<%= name.toLowerCase() %>',
-  templateUrl: './add-<%= name.toLowerCase() %>.component.html'
+  styleUrls: ['./<%= name.toLowerCase() %>.scss'],
+  templateUrl: './add-<%= name.toLowerCase() %>.html'
 })
 
 export class Add<%= _s.classify(name) %>Component implements OnInit {

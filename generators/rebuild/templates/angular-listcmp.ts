@@ -5,10 +5,11 @@ import {<%= _s.classify(name) %>} from "./<%= name.toLowerCase() %>.model";
 
 @Component({
   selector: 'qmr-list-<%= name.toLowerCase() %>',
-  templateUrl: './list-<%= name.toLowerCase() %>.component.html',
+  styleUrls: ['./<%= name.toLowerCase() %>.scss'],
+  templateUrl: './list-<%= name.toLowerCase() %>.html',
 })
 export class List<%= _s.classify(name) %>Component implements OnInit {
-
+  page = 1;
   items: <%= _s.classify(name) %>[];
 
   constructor(private router: Router, private <%= name.toLowerCase() %>Service: <%= _s.classify(name) %>Service) { }
