@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: PagesComponent,
     children: [
-      <% _.each(entities, function(entity) { %> { path: '<%= entity.name.toLowerCase() %>', loadChildren: 'app/<%= entity.name.toLowerCase() %>/<%= entity.name.toLowerCase() %>.module#_s.classify(entity.name)Module' },
+      <% _.each(entities, function(entity) { %> { path: '<%= entity.name.toLowerCase() %>', loadChildren: 'app/pages/<%= entity.name.toLowerCase() %>/<%= entity.name.toLowerCase() %>.module#<%= _s.classify(entity.name) %>Module' },
         <% }); %>
   {
     path: 'dashboard',

@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-import {<%= _s.classify(name) %>Service} from "./<%= name.toLowerCase() %>-service";
-import {<%= _s.classify(name) %>} from "./<%= name.toLowerCase() %>-model";
+import {<%= _s.classify(name) %>Service} from "./<%= name.toLowerCase() %>.service";
 import { first } from "rxjs/operators";
 
-@Component({ selector: 'qmr-edit-<%= name.toLowerCase() %>', templateUrl: './edit-<%= name.toLowerCase() %>.component.html' })
+@Component({
+  selector: 'qmr-edit-<%= name.toLowerCase() %>',
+  templateUrl: './edit-<%= name.toLowerCase() %>.component.html'
+})
 export class Edit<%= _s.classify(name) %>Component implements OnInit {
 
-  user: User;
   editForm: FormGroup;
   constructor(private formBuilder : FormBuilder, private router : Router, private <%= name.toLowerCase() %>Service : <%= _s.classify(name) %>Service) { }
 

@@ -4,7 +4,7 @@ import { Edit<%= _s.classify(name) %>Component } from './edit-<%= name.toLowerCa
 
 describe('Edit<%= _s.classify(name) %>Component', () => {
   let component: Edit<%= _s.classify(name) %>Component;
-  let fixture: ComponentFixture<AddUserComponent>;
+  let fixture: ComponentFixture<Edit<%= _s.classify(name) %>Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

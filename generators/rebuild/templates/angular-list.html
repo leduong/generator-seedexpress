@@ -15,18 +15,18 @@
           </span>
         </div>
         <div class="pagination">
-            <ngb-pagination size="lg"
+            <!--ngb-pagination size="lg"
                 [collectionSize]="120"
                 [(page)]="page"
                 [maxSize]="5"
                 [boundaryLinks]="true">
-            </ngb-pagination>
+            </ngb-pagination-->
         </div>
         <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
                 <th class="hidden">Id</th><% _.each(attrs, function (attr) { %>
-                <th<%= _s.classify(attr.attrName) %>
+                <th><%= _s.classify(attr.attrName) %>
                 </th><%})%>
                 <th>Action</th>
               </tr>

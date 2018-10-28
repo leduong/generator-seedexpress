@@ -3,16 +3,16 @@ import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
 
-import {<%= _s.classify(name) %>Service} from "./<%= name.toLowerCase() %>-service";
+import {<%= _s.classify(name) %>Service} from "./<%= name.toLowerCase() %>.service";
 
 @Component({
   selector: 'qmr-add-<%= name.toLowerCase() %>',
-  templateUrl: './add-<%= name.toLowerCase() %>.component.html']
+  templateUrl: './add-<%= name.toLowerCase() %>.component.html'
 })
 
 export class Add<%= _s.classify(name) %>Component implements OnInit {
 
-  constructor(private formBuilder : FormBuilder, private router : Router, private <%= name.toLowerCase() %>Service : <%= name.toLowerCase() %>Service) { }
+  constructor(private formBuilder : FormBuilder, private router : Router, private <%= name.toLowerCase() %>Service : <%= _s.classify(name) %>Service) { }
 
   addForm: FormGroup;
 

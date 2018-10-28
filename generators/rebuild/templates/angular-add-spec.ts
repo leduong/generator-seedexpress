@@ -4,7 +4,7 @@ import { Add<%= _s.classify(name) %>Component } from './add-<%= name.toLowerCase
 
 describe('Add<%= _s.classify(name) %>Component', () => {
   let component: Add<%= _s.classify(name) %>Component;
-  let fixture: ComponentFixture<AddUserComponent>;
+  let fixture: ComponentFixture<Add<%= _s.classify(name) %>Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

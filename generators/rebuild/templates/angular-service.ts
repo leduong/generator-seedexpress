@@ -4,7 +4,7 @@ import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular
 import { Observable, of, throwError } from 'rxjs'
 import { catchError, tap, map } from 'rxjs/operators'
 
-import {<%= _s.classify(name) %>} from "./<%= name.toLowerCase() %>-model";
+import {<%= _s.classify(name) %>} from "./<%= name.toLowerCase() %>.model";
 
 let token = localStorage.getItem('token') || ''
 const httpOptions = {
@@ -41,7 +41,7 @@ getAll(page : number = 1, limit : number = 20, sort ? : string, order ? : string
   if (q && q !== '') {
     params.set('q', q);
   }
-  if (sort && sort !== '' && allowColm(sort)) {
+  if (sort && sort !== '' && this.allowColm(sort)) {
     params.set('sort', sort);
   }
   if (order && order !== '' && (order.toUpperCase() === 'ASC' || order.toUpperCase() === 'DESC')) {
