@@ -1,0 +1,33 @@
+nb-card {
+  transform: translate3d(0, 0, 0);
+}
+
+nb-card-header {
+  .btn {
+    &:first-child {
+      margin-left: 0;
+    }
+    margin-left: 1rem;
+  }
+
+  .btn-danger,
+  .btn-info,
+  .btn-warning {
+    float: right;
+  }
+}
+
+nb-card-body {
+  .form-control-label {
+    text-align: right;
+    margin-top: 1rem;
+  }
+
+  .container {
+    padding: 0;
+  }
+
+  .custom-file-input~.custom-file-label::after {
+    content: "参照";
+  }
+}
