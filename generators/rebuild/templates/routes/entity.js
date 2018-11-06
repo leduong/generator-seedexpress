@@ -13,7 +13,7 @@ const getForm = (reqBody) => {
   return model;
 }
 
-// Render the home page and list all blog posts
+// Render the home page and list all <%= _s.classify(name) %>
 router.get("/", (req, res) => {
   db.<%=  _s.underscored(name) %>.findAll({order: sequelize.literal("created_at DESC")}).then(posts => {
     let postData = [];
@@ -28,8 +28,13 @@ router.get("/", (req, res) => {
   });
 });
 
-// Create a new post
-router.post("/", (req, res, next) => {
+// form a new <%= _s.classify(name) %>
+router.get("/add", (req, res) => {
+  res.render("<%= _.toLower(_s.classify(name)) %>/add-<%= _.toLower(_s.classify(name)) %>", {});
+});
+
+// Create a new <%= _s.classify(name) %>
+router.post("/add", (req, res) => {
   db.<%=  _s.underscored(name) %>.create(getForm(req.body)).then(newPost => {
     db.<%=  _s.underscored(name) %>.findAll({
       order: sequelize.literal("created_at DESC")
@@ -48,8 +53,8 @@ router.post("/", (req, res, next) => {
   });
 });
 
-// Render the edit post page
-router.get("/:id/edit", (req, res, next) => {
+// Render the edit <%= _s.classify(name) %> page
+router.get("/:id/edit", (req, res) => {
   db.<%=  _s.underscored(name) %>.findOne({
     where: {
       id: req.params.id
@@ -69,8 +74,8 @@ router.get("/:id/edit", (req, res, next) => {
   });
 });
 
-// Update a post
-router.post("/:id/edit", (req, res, next) => {
+// Update a <%= _s.classify(name) %>
+router.post("/:id/edit", (req, res) => {
   db.<%=  _s.underscored(name) %>.findOne({
     where: {
       id: req.params.id
@@ -87,13 +92,13 @@ router.post("/:id/edit", (req, res, next) => {
 
     post.update(getForm(req.body)).then(() => {
       post = post.get({plain: true});
-      res.redirect("/<%= _.toLower(_s.classify(name)) %>/" + req.body.id);
+      res.redirect("/<%= _.toLower(_s.classify(name)) %>/");
     });
   });
 });
 
-// Delete a post
-router.post("/:id/delete", (req, res, next) => {
+// Delete a <%= _s.classify(name) %>
+router.post("/:id/delete", (req, res) => {
   db.<%=  _s.underscored(name) %>.findOne({
     where: {
       id: req.params.id
@@ -114,7 +119,7 @@ router.post("/:id/delete", (req, res, next) => {
 });
 
 // View a post
-router.get("/:id", (req, res, next) => {
+router.get("/:id", (req, res) => {
   db.<%=  _s.underscored(name) %>.findOne({
     where: {
       id: req.params.id

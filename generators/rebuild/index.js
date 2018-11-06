@@ -67,6 +67,10 @@ module.exports = class extends Generator {
       });
     }.bind(this));
 
+    this.fs.copyTpl(this.templatePath('pug/sidebar.pug'), this.destinationPath('views/layout/sidebar.pug'), {
+      ...this
+    });
+
     // Var pages = ['pages-menu.js', 'pages.module.js', 'pages-routing.module.js'];
     // _.each(pages, function(file) {
     //   this.fs.copyTpl(this.templatePath(file), this.destinationPath('Client/Admin/src/app/pages/' + file), {

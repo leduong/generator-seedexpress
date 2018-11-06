@@ -6,15 +6,15 @@ block content
     // Content Header (Page header)
     section.content-header
       h1
-        | Management
-        small <%= _s.classify(name) %>
+        | <%= _s.classify(name) %>
+        small Management
       ol.breadcrumb
         li
-          a(href='#')
+          a(href='/')
             i.fa.fa-dashboard
             |  Home
         li
-          a(href='#') <%= _s.classify(name) %>
+          a(href='/<%= _.toLower(_s.classify(name)) %>') <%= _s.classify(name) %>
         li.active Add <%= _s.classify(name) %>
     // Main content
     section.content
@@ -42,8 +42,8 @@ block content
                 <% }) %>
               // /.box-body
               .box-footer
-                button.btn.btn-default(type='submit') Submit
-                button.btn.btn-info.pull-right(type='reset') Reset
+                button.btn.btn-primary(type='submit') Submit
+                button.btn.btn-default.pull-right(type='reset') Reset
               // /.box-footer
           // /.box
       // /.row
