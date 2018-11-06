@@ -91,14 +91,25 @@ router.post("/:id/edit", (req, res) => {
     }
 
     post.update(getForm(req.body)).then(() => {
-      post = post.get({plain: true});
-      res.redirect("/<%= _.toLower(_s.classify(name)) %>/");
+      db.<%=  _s.underscored(name) %>.findAll({
+        order: sequelize.literal("created_at DESC")
+      }).then(posts => {
+        let postData = [];
+
+        posts.forEach(post => {
+          postData.push(post.get({plain: true}));
+        });
+
+        res.render("<%= _.toLower(_s.classify(name)) %>/index", {
+          posts: postData
+        });
+      });
     });
   });
 });
 
 // Delete a <%= _s.classify(name) %>
-router.post("/:id/delete", (req, res) => {
+router.get("/:id/delete", (req, res) => {
   db.<%=  _s.underscored(name) %>.findOne({
     where: {
       id: req.params.id
@@ -113,8 +124,21 @@ router.post("/:id/delete", (req, res) => {
       });
     }
 
-    post.destroy();
-    res.redirect("/<%= _.toLower(_s.classify(name)) %>/");
+    post.destroy().then(()=>{
+      db.<%=  _s.underscored(name) %>.findAll({
+        order: sequelize.literal("created_at DESC")
+      }).then(posts => {
+        let postData = [];
+
+        posts.forEach(post => {
+          postData.push(post.get({plain: true}));
+        });
+
+        res.render("<%= _.toLower(_s.classify(name)) %>/index", {
+          posts: postData
+        });
+      });
+    });
   });
 });
 
