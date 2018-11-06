@@ -1,9 +1,9 @@
 var db = require('../models'),
-    _ = require('lodash');
+  _ = require('lodash');
 
 /**
  * @swagger
- * /<%= baseName %>/<%= _s.classify(name) %>:
+ * /<%= baseName %>/<%= _s.classify(pluralize(name)) %>:
  *   get:
  *     description: Get list of <%= _s.camelize(_.capitalize(name)) %>
  *     produces:
@@ -14,49 +14,49 @@ var db = require('../models'),
  *           description: <%= _s.camelize(_.capitalize(name)) %>
  */
 exports.findAll = function(req, res) {
-    var q = req.query.q || "",
-        sort = req.query.sort || "id",
-        order = req.query.order || "asc",
-        page = parseInt(req.query.page) || 1,
-        limit = parseInt(req.query.limit) || 20,
-        group = req.query.group || "",
-        offset = ((page - 1) * limit),
-        orderBy = [
-            sort, order.toUpperCase()
-        ],
-        query = {
-            order: [orderBy],
-            offset: offset,
-            limit: limit
-        };
-
-    if (group) {
-        query = _.merge({
-            group: group
-        }, query);
+  var q = req.query.q || "",
+    sort = req.query.sort || "id",
+    order = req.query.order || "asc",
+    page = parseInt(req.query.page) || 1,
+    limit = parseInt(req.query.limit) || 20,
+    group = req.query.group || "",
+    offset = ((page - 1) * limit),
+    orderBy = [
+      sort, order.toUpperCase()
+    ],
+    query = {
+      order: [orderBy],
+      offset: offset,
+      limit: limit
     };
 
-    if (q) {
-        query = _.extend({
-            <% var concat = []; _.each(attrs, function (attr) {
+  if (group) {
+    query = _.merge({
+      group: group
+    }, query);
+  };
+
+  if (q) {
+    query = _.extend({
+      <% var concat = []; _.each(attrs, function (attr) {
       if (attr.attrType.toUpperCase() === "STRING" || attr.attrType.toUpperCase() === "CHAR" || attr.attrType.toUpperCase() === "TEXT") {
         concat.push(_s.underscored(attr.attrName));
       }
     });%>
-            where: ["CONCAT(<%= concat.join(', ') %>) LIKE '%" + q + "%'"]
-        }, query);
-    };
+      where: ["CONCAT(<%= concat.join(', ') %>) LIKE '%" + q + "%'"]
+    }, query);
+  };
 
-    db.<%= _s.camelize(_.capitalize(name)) %>.findAndCountAll(query).then(function(result) {
-        res.jsonp({
-            total: result.count,
-            page: page,
-            limit: limit,
-            from: offset + 1,
-            to: offset + result.rows.length,
-            results: result.rows
-        });
-    })
+  db.<%= _s.camelize(_.capitalize(name)) %>.findAndCountAll(query).then(function(result) {
+    res.jsonp({
+      total: result.count,
+      page: page,
+      limit: limit,
+      from: offset + 1,
+      to: offset + result.rows.length,
+      results: result.rows
+    });
+  })
 }
 
 /**
@@ -81,17 +81,17 @@ exports.findAll = function(req, res) {
  *         description: ID of <%= _s.camelize(_.capitalize(name)) %>
  */
 exports.find = function(req, res) {
-    db.<%= _s.camelize(_.capitalize(name)) %>.find({
-        where: {
-            id: req.params.id
-        }
-    }).then(function(entity) {
-        if (entity) {
-            res.json(entity)
-        } else {
-            res.sendStatus(404)
-        }
-    })
+  db.<%= _s.camelize(_.capitalize(name)) %>.find({
+    where: {
+      id: req.params.id
+    }
+  }).then(function(entity) {
+    if (entity) {
+      res.json(entity)
+    } else {
+      res.sendStatus(404)
+    }
+  })
 }
 
 /**
@@ -122,10 +122,10 @@ exports.find = function(req, res) {
  *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
  */
 exports.create = function(req, res) {
-    db.<%= _s.camelize(_.capitalize(name)) %>.create(req.body).then(function(entity) {
-        res.statusCode = 201
-        res.json(entity)
-    })
+  db.<%= _s.camelize(_.capitalize(name)) %>.create(req.body).then(function(entity) {
+    res.statusCode = 201
+    res.json(entity)
+  })
 }
 
 /**
@@ -162,19 +162,19 @@ exports.create = function(req, res) {
  *           $ref: '#/definitions/<%= _s.camelize(_.capitalize(name)) %>'
  */
 exports.update = function(req, res) {
-    db.<%= _s.camelize(_.capitalize(name)) %>.find({
-        where: {
-            id: req.params.id
-        }
-    }).then(function(entity) {
-        if (entity) {
-            entity.updateAttributes(req.body).then(function(entity) {
-                res.json(entity)
-            })
-        } else {
-            res.sendStatus(404)
-        }
-    })
+  db.<%= _s.camelize(_.capitalize(name)) %>.find({
+    where: {
+      id: req.params.id
+    }
+  }).then(function(entity) {
+    if (entity) {
+      entity.updateAttributes(req.body).then(function(entity) {
+        res.json(entity)
+      })
+    } else {
+      res.sendStatus(404)
+    }
+  })
 }
 
 /**
@@ -200,19 +200,19 @@ exports.update = function(req, res) {
  *         description: ID of <%= _s.camelize(_.capitalize(name)) %>
  */
 exports.destroy = function(req, res) {
-    db.<%= _s.camelize(_.capitalize(name)) %>.find({
-        where: {
-            id: req.params.id
-        }
-    }).then(function(entity) {
-        if (entity) {
-            entity.destroy().then(function() {
-                res.sendStatus(204)
-            })
-        } else {
-            res.sendStatus(404)
-        }
-    })
+  db.<%= _s.camelize(_.capitalize(name)) %>.find({
+    where: {
+      id: req.params.id
+    }
+  }).then(function(entity) {
+    if (entity) {
+      entity.destroy().then(function() {
+        res.sendStatus(204)
+      })
+    } else {
+      res.sendStatus(404)
+    }
+  })
 }
 
 /**

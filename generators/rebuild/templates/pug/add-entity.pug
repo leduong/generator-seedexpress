@@ -1,0 +1,51 @@
+extends ../layout/base
+
+block content
+  // Content Wrapper. Contains page content
+  .content-wrapper
+    // Content Header (Page header)
+    section.content-header
+      h1
+        | Management
+        small <%= _s.classify(name) %>
+      ol.breadcrumb
+        li
+          a(href='#')
+            i.fa.fa-dashboard
+            |  Home
+        li
+          a(href='#') <%= _s.classify(name) %>
+        li.active Add <%= _s.classify(name) %>
+    // Main content
+    section.content
+      .row
+        .col-md-12
+          // Horizontal Form
+          .box.box-info
+            .box-header.with-border
+              h3.box-title Add <%= _s.classify(name) %>
+            // /.box-header
+            // form start
+            form.form-horizontal(method="post")
+              .box-body
+                <% _.each(attrs, function (attr) { %>.form-group
+                  label.col-sm-3.control-label(for='<%=  _s.underscored(attr.attrName) %>') <%=  _s.classify(attr.attrName) %>
+                  .col-sm-9
+                    <% 
+                    if (attr.attrType.toUpperCase() === "TEXT") { %>textarea.form-control(rows='3', name='<%=  _s.underscored(attr.attrName) %>', placeholder='<%= _s.classify(_.capitalize(attr.attrName)) %>...')<% }
+                    else if (attr.attrType.toUpperCase() === "INTEGER"
+                        || attr.attrType.toUpperCase() === "BIGINT"
+                        || attr.attrType.toUpperCase() === "DECIMAL"
+                        || attr.attrType.toUpperCase() === "FLOAT"
+                        || attr.attrType.toUpperCase() === "TINYINT") { %>input.form-control(type='number', name='<%=  _s.underscored(attr.attrName) %>', placeholder='<%= _s.classify(_.capitalize(attr.attrName)) %>...')<% }
+                    else { %>input.form-control(type='text', name='<%=  _s.underscored(attr.attrName) %>', placeholder='<%= _s.classify(_.capitalize(attr.attrName)) %>...')<% } %>
+                <% }) %>
+              // /.box-body
+              .box-footer
+                button.btn.btn-default(type='submit') Submit
+                button.btn.btn-info.pull-right(type='reset') Reset
+              // /.box-footer
+          // /.box
+      // /.row
+    // /.content
+  // /.content-wrapper

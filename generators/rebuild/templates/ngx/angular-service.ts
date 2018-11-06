@@ -4,7 +4,7 @@ import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular
 import { Observable, of, throwError } from 'rxjs'
 import { catchError, tap, map } from 'rxjs/operators'
 
-import {<%= _s.classify(name) %>} from "./<%= _.toLower(_s.classify(name)) %>.model";
+import {<%= _s.classify(name) %>} from "./<%= name.toLowerCase() %>.model";
 
 let token = localStorage.getItem('token') || ''
 const httpOptions = {
@@ -17,16 +17,16 @@ export class <%= _s.classify(name) %>Service {
 
   constructor(private http : HttpClient) { }
 
-  post(<%= _.toLower(_s.classify(name)) %> : <%= _s.classify(name) %>) {
-    return this.http.post(`${this.endPoint}`, <%= _.toLower(_s.classify(name)) %>, httpOptions).pipe(map(this.extractData), catchError(this.handleError));
+  post(<%= name.toLowerCase() %> : <%= _s.classify(name) %>) {
+    return this.http.put(`${this.endPoint}`, <%= name.toLowerCase() %>, httpOptions).pipe(map(this.extractData), catchError(this.handleError));
   }
 
   getById(id : number) {
     return this.http.get(`${this.endPoint}/${id}`, httpOptions).pipe(map(this.extractData), catchError(this.handleError));
   }
 
-  put(<%= _.toLower(_s.classify(name)) %> : <%= _s.classify(name) %>) {
-    return this.http.put(`${this.endPoint}/${<%= _.toLower(_s.classify(name)) %>.id} `, <%= _.toLower(_s.classify(name)) %>, httpOptions).pipe(map(this.extractData), catchError(this.handleError));
+  put(<%= name.toLowerCase() %> : <%= _s.classify(name) %>) {
+    return this.http.put(`${this.endPoint}/${<%= name.toLowerCase() %>.id} `, <%= name.toLowerCase() %>, httpOptions).pipe(map(this.extractData), catchError(this.handleError));
   }
 
   deleteById(id : number) {

@@ -1,199 +1,103 @@
-const express = require('express'),
-  debug = require('debug')('express-sequelize'),
-  bodyParser = require('body-parser'),
-  cookieParser = require('cookie-parser'),
-  methodOverride = require('method-override'),
-  swaggerJSDoc = require('swagger-jsdoc'),
-  morgan = require('morgan'),
-  http = require('http'),
-  path = require('path'),
-  cors = require('cors'),
-  db = require('./models');
-<% _.each(entities, function(entity) { %>
-const <%= _.camelCase(entity.name) %> = require('./routes/<%= _s.classify(entity.name) %>');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+const FileStore = require('session-file-store')(session);
+
+const env = process.env.NODE_ENV || 'development';
+const config = require('./config/config.json')[env];
+const uuidv4 = require('uuid/v4');
+const crypto = require('crypto');
+
+const logger = require('morgan');
+
+// Routers
+const indexRouter = require('./routes/index');
+const adminRouter = require('./routes/admin');
+const authRouter = require('./routes/auth');
+<% _.each(entities, function(entity) { %>const <%= _.camelCase(entity.name) %>Router = require('./routes/<%= _s.classify(entity.name) %>');
 <% }); %>
 
-/**
- * Get port from environment and store in Express.
- */
-const app = express();
-const port = normalizePort(process.env.PORT || '3000');
 
-/**
- * Get port from environment and store in Express.
- */
-app.set('port', port);
-app.set('views', __dirname + '/views');
+const app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(morgan('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors());
-app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const options = {
-  definition: {
-    info: {
-      title: '<%= _s.slugify(baseName) %>', // Title (required)
-      version: '1.0.0', // Version (required)
-    },
-    schemes: ["http"]
-  },
-  // Path to the API docs
-  // apis: ['./routes.js'],
-  apis: [
-    './routes/*.js', 'routes.js'
-  ], // pass all in array
+var sessionStore;
+const secretKey = 'IamDontKnowWhatisThisKey';// should to change
+if (config.redis) {
+    var redisStoreoptions;
+    redisStoreoptions = {
+        host: config.redis.host,
+        port: config.redis.port,
+        db: config.redis.database,
+        pass: config.redis.password
+    };
+    sessionStore = new RedisStore(redisStoreoptions);
+} else {
+    sessionStore = new FileStore();
+}
+
+var sess = {
+    store: sessionStore,
+    secret: crypto.createHash('sha256').update(secretKey).digest('hex'),
+    resave: false,
+    saveUninitialized: true,
+    cookie: {},
+    // genid: function (req) {
+    //'req' is defined but never used  no-unused-vars
+    genid: function() {
+        return uuidv4(); // use UUIDs for session IDs
+    }
 };
-const swaggerSpec = swaggerJSDoc(options);
 
-app.get('/api-docs.json', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1); // trust first proxy
+    sess.cookie.secure = true; // serve secure cookies
+}
 
-<% _.each(entities, function(entity) { %>
-app.get('/<%= baseName %>/<%= _s.classify(entity.name) %>', <%= _.camelCase(entity.name) %>.findAll);
-app.get('/<%= baseName %>/<%= _s.classify(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.find);
-app.post('/<%= baseName %>/<%= _s.classify(entity.name) %>', <%= _.camelCase(entity.name) %>.create);
-app.put('/<%= baseName %>/<%= _s.classify(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.update);
-app.delete('/<%= baseName %>/<%= _s.classify(entity.name) %>/:id', <%= _.camelCase(entity.name) %>.destroy);
+app.use(session(sess));
+
+// app.use(function (req, res, next) {
+//   if (!req.session) {
+//     return next(new Error("oh no")); // handle error
+//   }
+//   next();
+// });
+
+app.use('/', indexRouter);
+app.use('/admin', adminRouter);
+app.use('/auth', authRouter);
+// Routers
+<% _.each(entities, function(entity) { %>app.use('/<%= _.toLower(_s.classify(entity.name)) %>', <%= _.camelCase(entity.name) %>Router);
 <% }); %>
 
-/**
- * Create HTTP server.
- */
-var server = http.createServer(app);
-
-db.sequelize.sync().then(function() {
-  /**
-   * Listen on provided port, on all network interfaces.
-   */
-  server.listen(port, function() {
-    debug('Express server listening on port ' + server.address().port);
-  });
-  server.on('error', onError);
-  server.on('listening', onListening);
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    next(createError(404));
 });
 
-/**
- * Normalize a port into a number, string, or false.
- */
+// error handler
+// app.use(function(err, req, res, next) {
+// 'next' is defined but never used  no-unused-vars
+app.use(function(err, req, res) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-function normalizePort(val) {
-  var port = parseInt(val, 10);
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+});
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+module.exports = app;

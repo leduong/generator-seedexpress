@@ -1,0 +1,26 @@
+extends ../layout/base
+
+block content
+  // Content Wrapper. Contains page content
+  .content-wrapper
+    // Content Header (Page header)
+    section.content-header
+      h1
+        | Management
+        small <%= _s.classify(name) %>
+      ol.breadcrumb
+        li
+          a(href='#')
+            i.fa.fa-dashboard
+            |  Home
+        li
+          a(href='#') <%= _s.classify(name) %>
+        li.active List <%= _s.classify(name) %>
+    // Main content
+    section.content
+      .row
+        .col-md-12
+          
+      // /.row
+    // /.content
+  // /.content-wrapper
