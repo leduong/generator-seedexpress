@@ -22,28 +22,32 @@ block content
         .col-md-12
           .box
             .box-header.with-border
-              h3.box-title Bordered Table
+              h3.box-title List <%= _s.classify(name) %>
             // /.box-header
             .box-body
-              table.table.table-bordered
+              table.table.table-bordered.table-hover
                 tr
                   th(style='width: 10px') #
+                  th
+                    input(type='checkbox')
                   <% _.each(attrs, function (attr) { %>th <%= _s.classify(attr.attrName) %>
                   <%})%>
-                  th(style='width: 90px') Action
+                  th(style='width: 120px') Action
                 each post in posts
                   tr
                     td #{post.id}
+                    td
+                      input(type='checkbox')
                     <% _.each(attrs, function (attr) { %>td #{post.<%= _s.underscored(attr.attrName) %>}
                     <%})%>td
                       a.btn.btn-danger(href='/<%= _.toLower(_s.classify(name)) %>/'+post.id+'/delete')
-                        i.fas.fa-trash.trash
+                        i.fa.fa-trash.trash
                       a.btn.btn-info(href='/<%= _.toLower(_s.classify(name)) %>/'+post.id+'/edit', style='margin-left: 20px;')
-                        i.fas.fa-edit.edit
+                        i.fa.fa-edit.edit
 
             // /.box-body
             .box-footer.clearfix
-              ul.pagination.pagination-sm.no-margin.pull-right
+              ul.pagination.pagination.no-margin.pull-right
                 li
                   a(href='#') &laquo;
                 li
