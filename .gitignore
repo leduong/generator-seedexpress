@@ -34,3 +34,4 @@ Icon
 
 node_modules/
 coverage
+yarn.lock
