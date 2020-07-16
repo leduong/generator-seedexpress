@@ -13,7 +13,7 @@
     "express": "latest",
     "lodash": "^4.17.11",
     "method-override": "^3.0.0",
-    "morgan": "~1.0.0",
+    "morgan": "^1.10.0",
     "mysql": "latest",
     "sequelize": "^4.39.0",
     "sequelize-mysql": "latest",
